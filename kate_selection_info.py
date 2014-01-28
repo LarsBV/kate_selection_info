@@ -14,31 +14,6 @@ from libkatepate.errors import showOk, showError
 import kate
 import re
 
-def addAction(self, objectName, icon, text, shortcut = "", slot = None, menuName = None):
-    act = KAction(KIcon(icon), text, self)
-    act.setObjectName(objectName)
-    
-    # Set shortcut
-    if not act.objectName() in kate.configuration:
-        kate.configuration[act.objectName()] = shortcut
-    act.setShortcut(kate.configuration[act.objectName()])
-
-    # Set slots
-    if slot != None:
-        act.triggered.connect( slot )
-    kate.mainInterfaceWindow().window().actionCollection().addAction(act.objectName(), act)
-    
-    # Add to menu
-    if menuName != None:
-      menu = kate.mainInterfaceWindow().window().findChild(QMenu, menuName.lower())
-      if menu == None:
-        menu = kate.mainInterfaceWindow().window().menuBar().addMenu(menuName)
-      menu.addAction(act)
-
-    # Save changes to shortcut
-    act.changed.connect( self.onActionChange )
-    
-    return act
       
 class Plugin(QObject):
   def __init__(self):
@@ -46,7 +21,7 @@ class Plugin(QObject):
 
     self.window = kate.mainInterfaceWindow().window()
     
-    addAction(self, 'open_selection_info', None, 'Selection info', 'Ctrl+Alt+I', self.selection_info, 'Tools')
+    self.addAction('open_selection_info', None, 'Selection info', 'Ctrl+Alt+I', self.selection_info, 'Tools')
     
     showOk('Selection inits!')
     
@@ -115,6 +90,32 @@ class Plugin(QObject):
     self.occurences.setText(     str(occurences     ))
     self.chars_no_space.setText( str(chars_no_space ))
     
+
+  def addAction(self, objectName, icon, text, shortcut = "", slot = None, menuName = None):
+    act = KAction(KIcon(icon), text, self)
+    act.setObjectName(objectName)
+    
+    # Set shortcut
+    if not act.objectName() in kate.configuration:
+        kate.configuration[act.objectName()] = shortcut
+    act.setShortcut(kate.configuration[act.objectName()])
+
+    # Set slots
+    if slot != None:
+        act.triggered.connect( slot )
+    kate.mainInterfaceWindow().window().actionCollection().addAction(act.objectName(), act)
+    
+    # Add to menu
+    if menuName != None:
+      menu = kate.mainInterfaceWindow().window().findChild(QMenu, menuName.lower())
+      if menu == None:
+        menu = kate.mainInterfaceWindow().window().menuBar().addMenu(menuName)
+      menu.addAction(act)
+
+    # Save changes to shortcut
+    act.changed.connect( self.onActionChange )
+    
+    return act
 
   def onActionChange(self):
       kate.configuration[self.sender().objectName()] =  self.sender().shortcut().toString()
