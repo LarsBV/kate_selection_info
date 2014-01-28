@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=Kate/PythonPlugin
+# The next three variables needs to be changed,
+# X-KDE-Library's value should match your directory name
+X-KDE-Library=kate_selection_info
+Name=Selection Info
+Comment=Selection info
+X-Python-2-Compatible=false
