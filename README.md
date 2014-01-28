@@ -1,11 +1,21 @@
-Kate plugin template
+Kate selection info
 ===========
 
-A basic python plugin template.
+A kate plugin show information about selected text/document.
+
+Info shown includes:
+* Characters
+* Spaces
+* Characters without spaces
+* Newline characters
+* Occurences of specified regex
 
 Installation
 =================================================
-Modify the variables in the .desktop file, and then you 
-should have a reasonable minimum plugin.
+Run install.sh to create the two neccesary symlinks.
 
-To install run install.sh for creating the two neccesary symlinks.
+Enable the plugin in settings.
+
+Default shortcuts
+=================================================
+* Ctrl+Alt+I Show info
