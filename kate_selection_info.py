@@ -51,14 +51,14 @@ class Plugin(QObject):
 
     self.search = QLineEdit()
     self.search.textChanged.connect(self.updateInfo)
+    self.search.setPlaceholderText('Regex')
      
     layout.addRow('Characters w. spaces:', self.chars)
     layout.addRow('Newlines:',             self.lines)
     layout.addRow('Word Count:',           self.word_count)
     layout.addRow('Characters:',           self.chars_no_space)
     layout.addRow('Spaces:',               self.spaces)
-    layout.addRow( self.search)
-    layout.addRow( self.occurences)
+    layout.addRow( self.search,            self.occurences)
     layout.addRow( ok )
     
 
