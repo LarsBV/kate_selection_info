@@ -15,7 +15,7 @@ import kate
 import re
 
 def addAction(self, objectName, icon, text, shortcut = "", slot = None, menuName = None):
-    act = KAction(KIcon(icon), text, kate.mainInterfaceWindow().window())
+    act = KAction(KIcon(icon), text, self)
     act.setObjectName(objectName)
     
     # Set shortcut
